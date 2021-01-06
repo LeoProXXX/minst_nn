@@ -1,13 +1,14 @@
 import numpy as np
 
+
 class Calculator:
     @staticmethod
     def sigmoid(x):
-        return 1/(1+np.exp(-x))
+        return 1 / (1 + np.exp(-x))
 
     @staticmethod
     def sigmoid_der(x):
-        return Calculator.sigmoid(x) *(1 - Calculator.sigmoid (x))
+        return Calculator.sigmoid(x) * (1 - Calculator.sigmoid(x))
 
     @staticmethod
     def softmax(x):

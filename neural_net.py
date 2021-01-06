@@ -2,7 +2,8 @@ import numpy as np
 import time
 from calculator import Calculator
 
-class NeuralNet():
+
+class NeuralNet:
     def __init__(self, sizes, epochs=10, l_rate=0.001):
         self.sizes = sizes
         self.epochs = epochs
@@ -11,13 +12,13 @@ class NeuralNet():
         self.params = self.initialize_parameters()
 
     def initialize_parameters(self):
-        input_layer=self.sizes[0]
-        hidden_1=self.sizes[1]
-        output_layer=self.sizes[2]
+        input_layer = self.sizes[0]
+        hidden_1 = self.sizes[1]
+        output_layer = self.sizes[2]
 
         params = {
-            'W1': np.random.randn(hidden_1, input_layer) / np.sqrt( hidden_1),
-            'W2': np.random.randn(output_layer, hidden_1) / np.sqrt( output_layer),
+            'W1': np.random.randn(hidden_1, input_layer) / np.sqrt(hidden_1),
+            'W2': np.random.randn(output_layer, hidden_1) / np.sqrt(output_layer),
         }
 
         return params
@@ -63,18 +64,18 @@ class NeuralNet():
             output = self.forward_progation(x)
             pred = np.argmax(output)
             predictions.append(pred == np.argmax(y))
-        
+
         return np.mean(predictions)
 
     def train(self, x_train, y_train, x_val, y_val):
         start_time = time.time()
         for iteration in range(self.epochs):
-            for x,y in zip(x_train, y_train):
+            for x, y in zip(x_train, y_train):
                 output = self.forward_progation(x)
                 changes_to_w = self.backward_progation(y, output)
                 self.update_parameters(changes_to_w)
-            
+
             accuracy = self.compute_accuracy(x_val, y_val)
             print('Epoch: {0}, Time Spent: {1:.2f}s, Accuracy: {2:.2f}%'.format(
-                iteration+1, time.time() - start_time, accuracy * 100
+                iteration + 1, time.time() - start_time, accuracy * 100
             ))
