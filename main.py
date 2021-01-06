@@ -43,6 +43,9 @@ class Testing:
         plt.bar(x_value, y_value, 0.7, color='g')
         plt.show()
 
+        print("liczba probek w zbiorze uczacym:", len(train_y))
+        print("liczba probek w zbiorze testowym:", len(test_y))
+
     @staticmethod
     def test_metrics():
         random.seed(10)

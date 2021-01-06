@@ -3,7 +3,7 @@ import random
 import numpy as np
 
 
-class DataProvider():
+class DataProvider:
     def __init__(self, train_images_np, train_labels_np, test_images_np, test_labels_np):
         self.train_images_np = train_images_np
         self.train_labels_np = train_labels_np
