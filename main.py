@@ -47,7 +47,7 @@ class Testing:
         print("liczba probek w zbiorze testowym:", len(test_y))
 
     @staticmethod
-    def test_metrics():
+    def test_metrics() -> None:
         random.seed(10)
 
         dp = DataProvider.load_from_folder('samples')
@@ -63,7 +63,7 @@ class Testing:
         print('macierz_bledow: ', scores['macierz_bledow'])
 
     @staticmethod
-    def show_images():
+    def show_images() -> None:
         random.seed(10)
 
         dp = DataProvider.load_from_folder('samples')
@@ -151,8 +151,8 @@ class Testing:
 
 
 if __name__ == '__main__':
-    # Testing.data_analysis()
-    Testing.test_metrics()
+    Testing.data_analysis()
+    # Testing.test_metrics()
     # Testing.show_images()
     # Testing.example()
     # Testing.example2()
