@@ -2,6 +2,7 @@ import numpy as np
 import time
 from calculator import Calculator
 
+
 class NeuralNet():
     def __init__(self, sizes, epochs=10, l_rate=0.001):
         self.sizes = sizes
@@ -11,18 +12,18 @@ class NeuralNet():
         self.params = self.initialize_parameters()
 
     def initialize_parameters(self):
-        input_layer=self.sizes[0]
-        hidden_1=self.sizes[1]
-        output_layer=self.sizes[2]
+        input_layer = self.sizes[0]
+        hidden_1 = self.sizes[1]
+        output_layer = self.sizes[2]
 
         params = {
-            'W1': np.random.randn(hidden_1, input_layer) / np.sqrt( hidden_1),
-            'W2': np.random.randn(output_layer, hidden_1) / np.sqrt( output_layer),
+            'W1': np.random.randn(hidden_1, input_layer) / np.sqrt(hidden_1),
+            'W2': np.random.randn(output_layer, hidden_1) / np.sqrt(output_layer),
         }
 
         return params
 
-    def forward_progation(self, x_train):
+    def forward_propagation(self, x_train):
         params = self.params
 
         # input layer activations becomes sample
@@ -38,7 +39,7 @@ class NeuralNet():
 
         return params['A2']
 
-    def backward_progation(self, y_train, output):
+    def backward_propagation(self, y_train, output):
         params = self.params
         change_w = {}
 
@@ -60,21 +61,21 @@ class NeuralNet():
         predictions = []
 
         for x, y in zip(x_val, y_val):
-            output = self.forward_progation(x)
+            output = self.forward_propagation(x)
             pred = np.argmax(output)
             predictions.append(pred == np.argmax(y))
-        
+
         return np.mean(predictions)
 
     def train(self, x_train, y_train, x_val, y_val):
         start_time = time.time()
         for iteration in range(self.epochs):
-            for x,y in zip(x_train, y_train):
-                output = self.forward_progation(x)
-                changes_to_w = self.backward_progation(y, output)
+            for x, y in zip(x_train, y_train):
+                output = self.forward_propagation(x)
+                changes_to_w = self.backward_propagation(y, output)
                 self.update_parameters(changes_to_w)
-            
+
             accuracy = self.compute_accuracy(x_val, y_val)
             print('Epoch: {0}, Time Spent: {1:.2f}s, Accuracy: {2:.2f}%'.format(
-                iteration+1, time.time() - start_time, accuracy * 100
+                iteration + 1, time.time() - start_time, accuracy * 100
             ))

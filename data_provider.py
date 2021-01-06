@@ -2,6 +2,7 @@ from mnist import MNIST
 import random
 import numpy as np
 
+
 class DataProvider():
     def __init__(self, train_images_np, train_labels_np, test_images_np, test_labels_np):
         self.train_images_np = train_images_np
@@ -9,22 +10,22 @@ class DataProvider():
         self.train_labels_hot_encoded = DataProvider.one_hot_encode(train_labels_np)
 
         self.test_images_np = test_images_np
-        self.test_labels_np = test_labels_np
-        self.test_labels_hot_encoded = DataProvider.one_hot_encode(test_labels_np)
+        self.test_labels_np = test_labels_np    # [7 2 1 ... 4 5 6]
+        self.test_labels_hot_encoded = DataProvider.one_hot_encode(test_labels_np)  # 2 - [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
 
     @staticmethod
     def load_from_folder(folder_name):
         mndata = MNIST(folder_name)
         mndata.gz = True
 
-        train_images, train_labels = mndata.load_training()
-        train_images_np = (np.array(train_images)/255).astype('float32')
+        train_images, train_labels = mndata.load_training()     # 2D array of pixels (not normalised)
+        train_images_np = (np.array(train_images) / 255).astype('float32')  # 2D array of pixels (normalised) - [0 - 1]
         train_labels_np = np.array(train_labels)
-        
+
         test_images, test_labels = mndata.load_testing()
-        test_images_np = (np.array(test_images)/255).astype('float32')
+        test_images_np = (np.array(test_images) / 255).astype('float32')
         test_labels_np = np.array(test_labels)
-        
+
         return DataProvider(train_images_np, train_labels_np, test_images_np, test_labels_np)
 
     def get_train_x(self):
@@ -32,7 +33,7 @@ class DataProvider():
 
     def get_train_y(self):
         return self.train_labels_np
-        
+
     def get_hot_encoded_train_y(self):
         return self.train_labels_hot_encoded
 
@@ -41,12 +42,16 @@ class DataProvider():
 
     def get_test_y(self):
         return self.test_labels_np
-        
+
     def get_hot_encoded_test_y(self):
         return self.test_labels_hot_encoded
 
     @staticmethod
     def one_hot_encode(labels):
+        """
+        :param labels: array of integers [1 2 ...]
+        :return: 2D array [ [0. 1. 0. ...], [0. 0. 1. ...] ]
+        """
         num_of_labels = len(labels)
         num_of_classes = np.max(labels) + 1
 
@@ -54,5 +59,5 @@ class DataProvider():
 
         for i in range(num_of_labels):
             one_hot_labels[i, labels[i]] = 1
-        
+
         return one_hot_labels
