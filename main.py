@@ -3,6 +3,7 @@ from neural_net import NeuralNet
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import matplotlib.cm as cm
 
 
 class Testing:
@@ -55,6 +56,42 @@ class Testing:
         print('macierz_bledow: ', scores['macierz_bledow'])
 
     @staticmethod
+    def show_images():
+        random.seed(10)
+
+        dp = DataProvider.load_from_folder('samples')
+
+        nn = NeuralNet(sizes=[784, 128, 10], epochs=10)
+        nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
+
+        properly_classified, misclassified = nn.get_properly_classified_and_misclassified_images(dp.get_test_x(), dp.get_hot_encoded_test_y())
+
+        print('properly classified')
+        plt.imshow(properly_classified[0].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(properly_classified[1].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(properly_classified[2].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(properly_classified[3].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(properly_classified[4].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+
+        print('missclasified')
+        plt.imshow(misclassified[0].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(misclassified[1].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(misclassified[2].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(misclassified[3].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+        plt.imshow(misclassified[4].reshape(28, 28), cmap=cm.binary)
+        plt.show()
+
+
+    @staticmethod
     def example():
         dp = DataProvider.load_from_folder('samples')
 
@@ -63,5 +100,6 @@ class Testing:
 
 
 # Testing.data_analysis()
-Testing.test_metrics()
+# Testing.test_metrics()
+Testing.show_images()
 # Testing.example()
