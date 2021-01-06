@@ -39,15 +39,13 @@ class NeuralNet:
 
         return params['A2']
 
-    def backward_progation(self, y_train, output):
+    def backward_propagation(self, y_train, output):
         params = self.params
         change_w = {}
 
-        # Calculate W2 update
         error = 2 * (output - y_train) / output.shape[0] * Calculator.softmax_der(params['Z2'])
         change_w['W2'] = np.outer(error, params['A1'])
 
-        # Calculate W1 update
         error = np.dot(params['W2'].T, error) * Calculator.sigmoid_der(params['Z1'])
         change_w['W1'] = np.outer(error, params['A0'])
 
@@ -72,7 +70,7 @@ class NeuralNet:
         for iteration in range(self.epochs):
             for x, y in zip(x_train, y_train):
                 output = self.forward_progation(x)
-                changes_to_w = self.backward_progation(y, output)
+                changes_to_w = self.backward_propagation(y, output)
                 self.update_parameters(changes_to_w)
 
             accuracy = self.compute_accuracy(x_val, y_val)
