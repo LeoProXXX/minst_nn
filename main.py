@@ -3,6 +3,7 @@ from neural_net import NeuralNet
 from neural_net2 import NeuralNet2
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 
 class Testing:
@@ -37,6 +38,22 @@ class Testing:
         plt.ylabel('liczba wystąpień klasy')
         plt.bar(x_value, y_value, 0.7, color='g')
         plt.show()
+
+    @staticmethod
+    def test_metrics():
+        random.seed(10)
+
+        dp = DataProvider.load_from_folder('samples')
+
+        nn = NeuralNet(sizes=[784, 128, 10], epochs=10)
+        nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
+
+        scores = nn.compute_metrics(dp.get_test_x(), dp.get_hot_encoded_test_y())
+        print('precyzja_makro: ', scores['precyzja_makro'])
+        print('czulosc_makro: ', scores['czulosc_makro'])
+        print('dokladnosc: ', scores['dokladnosc'])
+        print('raport: ', scores['raport'])
+        print('macierz_bledow: ', scores['macierz_bledow'])
 
     @staticmethod
     def example():
@@ -93,6 +110,7 @@ class Testing:
 
 if __name__ == '__main__':
     Testing.data_analysis()
+    Testing.test_metrics()
     # Testing.example()
     # Testing.example2()
     # Testing.example5()
