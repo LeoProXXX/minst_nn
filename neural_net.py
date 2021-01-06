@@ -77,7 +77,7 @@ class NeuralNet:
         y_true = []
 
         for x, y in zip(x_val, y_val):
-            output = self.forward_progation(x)
+            output = self.forward_propagation(x)
             pred = np.argmax(output)
             y_pred.append(pred)
             y_true.append(np.argmax(y))
@@ -87,6 +87,20 @@ class NeuralNet:
                 'dokladnosc': accuracy_score(y_true, y_pred),
                 'raport': classification_report(y_true, y_pred),
                 'macierz_bledow': confusion_matrix(y_true, y_pred)}
+
+    def get_properly_classified_and_misclassified_images(self, x_val, y_val):
+        properly_classified = []
+        misclassified = []
+
+        for x, y in zip(x_val, y_val):
+            output = self.forward_propagation(x)
+            pred = np.argmax(output)
+            if pred == np.argmax(y):
+                properly_classified.append(x)
+            else:
+                misclassified.append(x)
+
+        return properly_classified, misclassified
 
     def train(self, x_train, y_train, x_val, y_val):
         start_time = time.time()
