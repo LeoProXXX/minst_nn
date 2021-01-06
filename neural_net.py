@@ -1,6 +1,11 @@
 import numpy as np
 import time
 from calculator import Calculator
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import precision_score
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import classification_report
 
 
 class NeuralNet:
@@ -64,6 +69,22 @@ class NeuralNet:
             predictions.append(pred == np.argmax(y))
 
         return np.mean(predictions)
+
+    def compute_metrics(self, x_val, y_val):
+        y_pred = []
+        y_true = []
+
+        for x, y in zip(x_val, y_val):
+            output = self.forward_progation(x)
+            pred = np.argmax(output)
+            y_pred.append(pred)
+            y_true.append(np.argmax(y))
+
+        return {'precyzja_makro': precision_score(y_true, y_pred, average='macro'),
+                'czulosc_makro': recall_score(y_true, y_pred, average='macro'),
+                'dokladnosc': accuracy_score(y_true, y_pred),
+                'raport': classification_report(y_true, y_pred),
+                'macierz_bledow': confusion_matrix(y_true, y_pred)}
 
     def train(self, x_train, y_train, x_val, y_val):
         start_time = time.time()
