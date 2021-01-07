@@ -13,7 +13,7 @@ class Testing:
         """
         Data analysis of dataset
         """
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
 
         train_y = dp.get_train_y()
         print("train data")
@@ -50,7 +50,7 @@ class Testing:
     def test_metrics() -> None:
         random.seed(10)
 
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
 
         nn = NeuralNet(sizes=[784, 128, 10], epochs=10)
         nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
@@ -66,7 +66,7 @@ class Testing:
     def show_images() -> None:
         random.seed(10)
 
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
 
         nn = NeuralNet(sizes=[784, 128, 10], epochs=10)
         nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
@@ -102,7 +102,7 @@ class Testing:
         """
         Neural net with 1 hidden layer 10 epochs test
         """
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
 
         nn = NeuralNet(sizes=[784, 128, 10])
         nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
@@ -112,7 +112,7 @@ class Testing:
         """
         Neural net with 2 hidden layers 10 epochs test
         """
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
 
         nn = NeuralNet2(sizes=[784, 128, 64, 10])
         nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
@@ -122,7 +122,7 @@ class Testing:
         """
         Neural net with 1 hidden layer 100 epochs test
         """
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
 
         nn = NeuralNet(sizes=[784, 128, 10], epochs=100)
         nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
@@ -132,7 +132,7 @@ class Testing:
         """
         Neural net with 2 hidden layers 100 epochs test
         """
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
 
         nn = NeuralNet2(sizes=[784, 128, 64, 10], epochs=100)
         nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
@@ -144,12 +144,13 @@ class Testing:
         neural net with 1 hidden layer; 10 epochs
         """
         neurons_number = [196, 128, 98, 64, 32, 16]
-        dp = DataProvider.load_from_folder('samples')
+        dp = DataProvider.load_from_folder(dataset_folder)
         for n in neurons_number:
             nn = NeuralNet(sizes=[784, n, 10])
             nn.train(dp.get_train_x(), dp.get_hot_encoded_train_y(), dp.get_test_x(), dp.get_hot_encoded_test_y())
 
 
+dataset_folder = 'samples'
 if __name__ == '__main__':
     Testing.data_analysis()
     # Testing.test_metrics()
