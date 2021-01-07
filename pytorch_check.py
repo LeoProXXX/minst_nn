@@ -24,7 +24,6 @@ class Net(nn.Module):
         x = torch.softmax(x, dim=0)
         return x
 
-    @staticmethod
     def one_hot_encode(self, y):
         encoded = torch.zeros([10], dtype=torch.float64)
         encoded[y[0]] = 1.
